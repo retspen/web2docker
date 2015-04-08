@@ -1,0 +1,34 @@
+/*!
+ *
+ * Web2Docker (2015)
+ *
+ */
+
+
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+.navbar-default {
+  background-color: #563d7c;
+  border-color: #463265;
+}
+
+.navbar-default .navbar-brand {
+  color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #fff;
+}
+
+.navbar-default .navbar-nav>.open>a, 
+.navbar-default .navbar-nav>.open>a:focus, 
+.navbar-default .navbar-nav>.open>a:hover {
+    color: ;
+}
+
+.page-header {
+    margin: 0 0 20px;
+}
