@@ -4,7 +4,7 @@ from django.db import models
 class Server(models.Model):
     description = models.CharField(max_length=255)
     hostname = models.CharField(max_length=20)
-    conn_type = models.IntegerField(max_length=1)
+    conn_type = models.IntegerField()
 
     class Meta:
         verbose_name = "Server"

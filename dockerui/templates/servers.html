@@ -1,0 +1,42 @@
+{% extends "base_site.html" %}
+{% load static %}
+{% load stamptags %}
+{% load splitrepotags %}
+{% block title %}Servers{% endblock title %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static "css/sortable-theme-bootstrap.css" %}" />
+{% endblock stylesheet %}
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Servers</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            {% for server in server_list %}
+                {{ server.id }}<br>
+                {{ server.hostname }}<br>
+                {{ server.description }}<br>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock container %}
+{% block javascript %}
+<script src="{% static "js/sortable.min.js" %}"></script>
+<script>
+    $(document).ready(function () {
+        (function ($) {
+            $('#filter').keyup(function () {
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr').hide();
+                $('.searchable tr').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            })
+        }(jQuery));
+    });
+</script>
+{% endblock javascript %}

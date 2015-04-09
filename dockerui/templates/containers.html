@@ -9,6 +9,9 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
+                <div class="pull-right search">
+                    <input id="filter" class="form-control" type="text" placeholder="Search">
+                </div>
                 <h1>Containers</h1>
             </div>
         </div> 
@@ -19,36 +22,31 @@
                 <table class="table table-hover table-striped sortable-theme-bootstrap" data-sortable>
                     <thead>
                         <tr>
+                            <th>Server</th>
                             <th>ID</th>
                             <th>Image</th>
                             <th>Command</th>
-                            <th>Created</th>
                             <th>Status</th>
                             <th>Ports</th>
-                            <th>Names</th>
                         </tr>
                     </thead>
                     <tbody class="searchable">
-                        {% for cont in cli.containers %}
-                            <tr>
-                                <td>{{ cont.Id|truncatechars:15 }}</td>
-                                <td>{{ cont.Image }}</td>
-                                <td>{{ cont.Command }}</td>
-                                <td>{{ cont.Created|stampconvert }}</td>
-                                <td>{{ cont.Status }}</td>
-                                <td>{% if cont.Ports %}
-                                        {% for net in cont.Ports %}
-                                            {{ net.IP }}:{{ net.PublicPort }}->{{ net.PrivatePort }}/{{ net.Type }}<br>
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
-                                <td>{% if cont.Names %}
-                                        {% for cont_name in cont.Names %}
-                                            {{ cont_name }}
-                                        {% endfor %}
-                                    {% endif %}
-                                </td>
-                            </tr>
+                        {% for server in server_list %}
+                            {% for container in server.containers %}
+                                <tr>
+                                    <td><a href="#">{{ server.description }}</a></td>
+                                    <td><a href="{{ server.id }}/{{ container.Id }} ">{{ container.Id|truncatechars:15 }}</a></td>
+                                    <td>{{ container.Image }}</td>
+                                    <td>{{ container.Command }}</td>
+                                    <td>{{ container.Status }}</td>
+                                    <td>{% if container.Ports %}
+                                            {% for net in container.Ports %}
+                                                {{ net.IP }}:{{ net.PublicPort }}->{{ net.PrivatePort }}/{{ net.Type }}<br>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                     </tbody>
                 </table>
