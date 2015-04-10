@@ -1,0 +1,47 @@
+{% extends "base_site.html" %}
+{% load static %}
+{% block title %}Docker Host - {{ server_model.description }}{% endblock title %}
+{% block container %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Docker Host - {{ server_model.description }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="page-header">Host info</h3>
+                <div class="col-xs-6 col-sm-3">
+                    <p>Containers</p>
+                    <p>Images</p>
+                    <p>Storage Driver</p>
+                    <p style="margin-left:10px;">Root Dir</p>
+                    <p style="margin-left:10px;">Backing Filesystem</p>
+                    <p style="margin-left:10px;">Dirs</p>
+                    <p>Execution Driver</p>
+                    <p>Kernel Version</p>
+                    <p>Operating System</p>
+                    <p>CPUs</p>
+                    <p>Total Memory</p>
+                    <p>Name</p>
+                    <p>Swap Limit</p>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <p>{{ server_info.Containers }}</p>
+                    <p>{{ server_info.Images }}</p>
+                    <p>{{ server_info.Driver }}</p>
+                    <p>{{ server_info.DriverStatus.0.1 }}</p>
+                    <p>{{ server_info.DriverStatus.1.1 }}</p>
+                    <p>{{ server_info.DriverStatus.2.1 }}</p>
+                    <p>{{ server_info.ExecutionDriver }}</p>
+                    <p>{{ server_info.KernelVersion }}</p>
+                    <p>{{ server_info.OperatingSystem }}</p>
+                    <p>{{ server_info.NCPU }}</p>
+                    <p>{{ server_info.MemTotal|filesizeformat }}</p>
+                    <p>{{ server_info.Name }}</p>
+                    <p>{{ server_info.SwapLimit }}</p>
+                </div>
+            </div>
+    </div>
+{% endblock container %}

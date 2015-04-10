@@ -1,6 +1,6 @@
 {% extends "base_site.html" %}
 {% load static %}
-{% load stamptags %}
+{% load containerstag %}
 {% block title %}Containers{% endblock title %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static "css/sortable-theme-bootstrap.css" %}" />
@@ -34,8 +34,8 @@
                         {% for server in server_list %}
                             {% for container in server.containers %}
                                 <tr>
-                                    <td><a href="#">{{ server.description }}</a></td>
-                                    <td><a href="{{ server.id }}/{{ container.Id }} ">{{ container.Id|truncatechars:15 }}</a></td>
+                                    <td><a href="{% url 'server' server.id %}">{{ server.description }}</a></td>
+                                    <td><a href="{{ server.id }}/{{ container.Id|truncateid }} ">{{ container.Id|truncateid }}</a></td>
                                     <td>{{ container.Image }}</td>
                                     <td>{{ container.Command }}</td>
                                     <td>{{ container.Status }}</td>

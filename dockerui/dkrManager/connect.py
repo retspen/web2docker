@@ -5,7 +5,6 @@ Connection - management class for connection to docker host.
 from docker import Client
 from docker.tls import TLSConfig
 
-
 SOCKET = 1
 SIMPLE = 2
 TLS_PUB_TRUE = 3
