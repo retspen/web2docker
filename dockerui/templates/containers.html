@@ -31,10 +31,10 @@
                         </tr>
                     </thead>
                     <tbody class="searchable">
-                        {% for server in server_list %}
-                            {% for container in server.containers %}
+                        {% for host in hosts_list %}
+                            {% for container in host.containers %}
                                 <tr>
-                                    <td><a href="{% url 'server' server.id %}">{{ server.description }}</a></td>
+                                    <td><a href="{% url 'host' host.id %}">{{ host.description }}</a></td>
                                     <td><a href="{{ server.id }}/{{ container.Id|truncateid }} ">{{ container.Id|truncateid }}</a></td>
                                     <td>{{ container.Image }}</td>
                                     <td>{{ container.Command }}</td>

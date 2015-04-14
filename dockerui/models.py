@@ -1,14 +1,14 @@
 from django.db import models
 
 
-class Server(models.Model):
+class Host(models.Model):
     description = models.CharField(max_length=255)
     hostname = models.CharField(max_length=20)
     conn_type = models.IntegerField()
 
     class Meta:
-        verbose_name = "Server"
-        verbose_name_plural = "Servers"
+        verbose_name = "Host"
+        verbose_name_plural = "Hosts"
 
     def __str__(self):
         return self.description
@@ -16,7 +16,7 @@ class Server(models.Model):
 
 class CertFiles(models.Model):
     description = models.CharField(max_length=50)
-    server = models.ForeignKey(Server)
+    host = models.ForeignKey(Host)
     tlscert = models.CharField(max_length=255)
     tlskey = models.CharField(max_length=255)
     tlscacert = models.CharField(max_length=255)

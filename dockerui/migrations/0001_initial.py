@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Server',
+            name='Host',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(max_length=255)),
@@ -33,13 +33,13 @@ class Migration(migrations.Migration):
                 ('conn_type', models.IntegerField()),
             ],
             options={
-                'verbose_name': 'Server',
-                'verbose_name_plural': 'Servers',
+                'verbose_name': 'Host',
+                'verbose_name_plural': 'Hosts',
             },
         ),
         migrations.AddField(
             model_name='certfiles',
-            name='server',
-            field=models.ForeignKey(to='dockerui.Server'),
+            name='host',
+            field=models.ForeignKey(to='dockerui.Host'),
         ),
     ]

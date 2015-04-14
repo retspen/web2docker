@@ -1,6 +1,7 @@
 """
 Connection - management class for connection to docker host.
 """
+import socket
 
 from docker import Client
 from docker.tls import TLSConfig
@@ -14,7 +15,19 @@ TLS_USER_WITHOUT_CA = 6
 TLS_USER_WITH_CA = 7
 
 
-class dkrConnection(object):
+def host_is_available(hostname):
+    try:
+        socket_host = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket_host.settimeout(1)
+        host, port = (hostname).split(":")
+        socket_host.connect((host, int(port)))
+        socket_host.close()
+        return True
+    except socket.error:
+        return False
+
+
+class hostConnection(object):
 
     def __init__(self, hostname, conn_type, tlsuser=None, tlskey=None, tlsca=None):
         # connection objects

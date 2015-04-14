@@ -3,10 +3,9 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.views.generic.base import TemplateView
 
-from .models import Server
+from .models import Host
 
-from dkrManager.connect import dkrConnection
-from dkrManager.utils import host_is_available
+from dockerConnect import host_is_available, hostConnection
 
 
 class IndexView(View):
@@ -18,20 +17,20 @@ class ContainersView(TemplateView):
     template_name = 'containers.html'
 
     def get_context_data(self, **kwargs):
-        servers = Server.objects.all()
-        server_list = []
+        hosts = Host.objects.all()
+        hosts_list = []
 
-        for server in servers:
-            if host_is_available(server.hostname):
-                conn = dkrConnection(server.hostname, server.conn_type)
+        for host in hosts:
+            if host_is_available(host.hostname):
+                conn = hostConnection(host.hostname, host.conn_type)
                 cli = conn.connect()
-                server_list.append({'id': server.id,
-                                    'description': server.description,
-                                    'containers': cli.containers()
-                                    }
+                hosts_list.append({'id': host.id,
+                                   'description': host.description,
+                                   'containers': cli.containers()
+                                   }
                 )
         context = super(ContainersView, self).get_context_data(**kwargs)
-        context['server_list'] = server_list
+        context['hosts_list'] = hosts_list
         return context
 
 
@@ -39,48 +38,51 @@ class ContainerView(View):
     template_name = 'container.html'
 
     def get(self, request, *args, **kwargs):
-        conn = dkrConnection('192.168.33.10:2376', 2)
+        conn = hostConnection('192.168.33.10:2376', 2)
         cli = conn.connect()
         return render(request, self.template_name, locals())
 
 
-class ServersView(TemplateView):
-    template_name = 'servers.html'
+class HostsView(TemplateView):
+    template_name = 'hosts.html'
 
     def get_context_data(self, **kwargs):
-        servers = Server.objects.all()
-        server_list = []
+        hosts = Host.objects.all()
+        hosts_list = []
 
-        for server in servers:
-            server_list.append({'id': server.id,
-                                'hostname': server.hostname,
-                                'description': server.description,
-                                'is_available': host_is_available(server.hostname)
-                                }
+        for host in hosts:
+            hosts_list.append({'id': host.id,
+                                'hostname': host.hostname,
+                                'description': host.description,
+                                'is_available': host_is_available(host.hostname)
+                               }
             )
-        context = super(ServersView, self).get_context_data(**kwargs)
-        context['server_list'] = server_list
+        context = super(HostsView, self).get_context_data(**kwargs)
+        context['hosts_list'] = hosts_list
         return context
 
 
-class ServerView(TemplateView):
-    template_name = 'server.html'
+class HostView(TemplateView):
+    template_name = 'host.html'
 
     def get_context_data(self, **kwargs):
-        server = Server.objects.get(id=kwargs['server_id'])
-        conn = dkrConnection(server.hostname, server.conn_type)
+        host = Host.objects.get(id=kwargs['host_id'])
+        conn = hostConnection(host.hostname, host.conn_type)
         cli = conn.connect()
-        context = super(ServerView, self).get_context_data(**kwargs)
-        context['server_model'] = server
-        context['server_info'] = cli.info()
+        context = super(HostView, self).get_context_data(**kwargs)
+        context['host_model'] = host
+        context['host_info'] = cli.info()
         return context
 
 
-class ImagesView(View):
+class HostImagesView(TemplateView):
     template_name = 'images.html'
 
-    def get(self, request, *args, **kwargs):
-        conn = dkrConnection('192.168.33.10:2376', 2)
+    def get_context_data(self, **kwargs):
+        host = Host.objects.get(id=kwargs['host_id'])
+        conn = hostConnection(host.hostname, host.conn_type)
         cli = conn.connect()
-        print cli.images()
-        return render(request, self.template_name, locals())
+        context = super(HostImagesView, self).get_context_data(**kwargs)
+        context['host_images'] = cli.images()
+        context['host_model'] = host
+        return context

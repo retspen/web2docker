@@ -11,21 +11,21 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            {% for server in server_list %}
-                <div id="{{ server.description }}" class="col-xs-12 col-sm-4">
-                    <div class="panel {% if server.is_available %}panel-success{% else %}panel-danger{% endif %} panel-data">
+            {% for host in hosts_list %}
+                <div id="{{ host.description }}" class="col-xs-12 col-sm-4">
+                    <div class="panel {% if host.is_available %}panel-success{% else %}panel-danger{% endif %} panel-data">
                         <div class="panel-heading">
-                            {% if server.is_available %}
+                            {% if host.is_available %}
                                 <h3 class="panel-title">
-                                    <a href="{% url 'server' server.id %}"><strong>{{ server.description }}</strong></a>
-                                    <a data-toggle="modal" href="#editHost{{ server.id }}" class="pull-right" title="Edit">
+                                    <a href="{% url 'host' host.id %}"><strong>{{ host.description }}</strong></a>
+                                    <a data-toggle="modal" href="#editHost{{ host.id }}" class="pull-right" title="Edit">
                                         <span class="glyphicon glyphicon-cog"></span>
                                     </a>
                                 </h3>
                             {% else %}
                                 <h3 class="panel-title">
-                                    <strong>{{ server.description }}</strong>
-                                    <a data-toggle="modal" href="#editHost{{ server.id }}" class="pull-right" title="Edit">
+                                    <strong>{{ host.description }}</strong>
+                                    <a data-toggle="modal" href="#editHost{{ host.id }}" class="pull-right" title="Edit">
                                         <span class="glyphicon glyphicon-cog"></span>
                                     </a>
                                 </h3>
@@ -37,7 +37,7 @@
                                     <p><strong>Status</strong></p>
                                 </div>
                                 <div class="col-xs-4 col-sm-6">
-                                    {% if server.is_available %}
+                                    {% if host.is_available %}
                                         <p>Connected</p>
                                     {% else %}
                                         <p>Not Connected</p>
