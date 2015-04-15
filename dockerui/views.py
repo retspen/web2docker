@@ -34,13 +34,18 @@ class ContainersView(TemplateView):
         return context
 
 
-class ContainerView(View):
+class ContainerView(TemplateView):
     template_name = 'container.html'
 
-    def get(self, request, *args, **kwargs):
-        conn = hostConnection('192.168.33.10:2376', 2)
+    def get_context_data(self, **kwargs):
+        host = Host.objects.get(id=kwargs['host_id'])
+        container_id = kwargs['container_id']
+        conn = hostConnection(host.hostname, host.conn_type)
         cli = conn.connect()
-        return render(request, self.template_name, locals())
+        context = super(ContainerView, self).get_context_data(**kwargs)
+        context['container_id'] = container_id
+        context['container_inspect'] = cli.inspect_container(container_id)
+        return context
 
 
 class HostsView(TemplateView):
@@ -62,16 +67,17 @@ class HostsView(TemplateView):
         return context
 
 
-class HostView(TemplateView):
+class HostInfoView(TemplateView):
     template_name = 'host.html'
 
     def get_context_data(self, **kwargs):
         host = Host.objects.get(id=kwargs['host_id'])
         conn = hostConnection(host.hostname, host.conn_type)
         cli = conn.connect()
-        context = super(HostView, self).get_context_data(**kwargs)
+        context = super(HostInfoView, self).get_context_data(**kwargs)
         context['host_model'] = host
         context['host_info'] = cli.info()
+        context['host_version'] = cli.version()
         return context
 
 

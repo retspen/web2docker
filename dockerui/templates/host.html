@@ -27,6 +27,11 @@
                     <p>Total Memory</p>
                     <p>Name</p>
                     <p>Swap Limit</p>
+                    <p>Server version</p>
+                    <p>Server API version</p>
+                    <p>Go version</p>
+                    <p>Git commit</p>
+                    <p>OS/Arch</p>
                 </div>
                 <div class="col-xs-6 col-sm-3">
                     <p>{{ host_info.Containers }}</p>
@@ -42,6 +47,11 @@
                     <p>{{ host_info.MemTotal|filesizeformat }}</p>
                     <p>{{ host_info.Name }}</p>
                     <p>{{ host_info.SwapLimit }}</p>
+                    <p>{{ host_version.Version }}</p>
+                    <p>{{ host_version.ApiVersion }}</p>
+                    <p>{{ host_version.GoVersion }}</p>
+                    <p>{{ host_version.GitCommit }}</p>
+                    <p>{{ host_version.Os }}/{{ host_version.Arch }}</p>
                 </div>
             </div>
     </div>
