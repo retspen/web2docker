@@ -1,6 +1,6 @@
 {% extends "base_site.html" %}
 {% load static %}
-{% load containerstag %}
+{% load dockeruitags %}
 {% block title %}Containers{% endblock title %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static "css/sortable-theme-bootstrap.css" %}" />
@@ -35,7 +35,7 @@
                             {% for container in host.containers %}
                                 <tr>
                                     <td><a href="{% url 'host' host.id %}">{{ host.description }}</a></td>
-                                    <td><a href="{% url 'container' host.id container.Id|truncateid %}">{{ container.Id|truncateid }}</a></td>
+                                    <td><a href="{% url 'container' host.id container.Id|slice:":12" %}">{{ container.Id|slice:":12" }}</a></td>
                                     <td>{{ container.Image }}</td>
                                     <td>{{ container.Command }}</td>
                                     <td>{{ container.Created|stampconvert }}</td>

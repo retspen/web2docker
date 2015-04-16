@@ -17,7 +17,7 @@
                         <div class="panel-heading">
                             {% if host.is_available %}
                                 <h3 class="panel-title">
-                                    <a href="{% url 'host' host.id %}"><strong>{{ host.description }}</strong></a>
+                                    <a href="{% url 'images' host.id %}"><strong>{{ host.description }}</strong></a>
                                     <a data-toggle="modal" href="#editHost{{ host.id }}" class="pull-right" title="Edit">
                                         <span class="glyphicon glyphicon-cog"></span>
                                     </a>

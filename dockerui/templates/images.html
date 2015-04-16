@@ -1,7 +1,6 @@
 {% extends "base_site.html" %}
 {% load static %}
-{% load containerstag %}
-{% load imagestags %}
+{% load dockeruitags %}
 {% block title %}Images{% endblock title %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static "css/sortable-theme-bootstrap.css" %}" />
@@ -10,17 +9,15 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
-                <h1>Docker Host - {{ host_model.description }}</h1>
+                <div class="pull-right search">
+                    <input id="filter" class="form-control" type="text" placeholder="Search">
+                </div>
+                <h3>Images on {{ host_model.description }}</h3>
             </div>
         </div> 
     </div> 
     <div class="row">
         <div class="col-lg-12">
-            {% include "breadcrumb.html" %}
-            <div class="pull-right search">
-                <input id="filter" class="form-control" type="text" placeholder="Search">
-            </div>
-            <h3 class="page-header">Images</h3>
             <div class="table-responsive">
                 <table class="table table-hover table-striped sortable-theme-bootstrap" data-sortable>
                     <thead>
@@ -38,12 +35,12 @@
                             <tr>
                                 <td>{{ img.RepoTags|showrepo }}</td>
                                 <td>{{ img.RepoTags|showtag }}</td>
-                                <td>{{ img.Id|truncateid }}</td>
+                                <td>{{ img.Id|slice:":12" }}</td>
                                 <td>{{ img.Created|stampconvert }}</td>
                                 <td>{{ img.VirtualSize|filesizeformat }}</td>
                                 <td>
                                     <form action="" method="post" role="form">{% csrf_token %}
-                                        <input type="hidden" name="image" value="{{ img.Id|truncateid }}">
+                                        <input type="hidden" name="image" value="{{ img.Id|slice:":12" }}">
                                         <button type="submit" class="btn btn-sm btn-default" name="delete" title="Delete" onclick="return confirm('Are you sure?')">
                                             <i class="glyphicon glyphicon-trash"></i>
                                         </button>

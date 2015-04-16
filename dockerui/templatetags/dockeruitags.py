@@ -4,13 +4,17 @@ import datetime
 
 register = template.Library()
 
+@register.simple_tag
+def showrepo(data):
+    return data[0].split(':')[0]
+
+register.filter(showrepo)
 
 @register.simple_tag
-def truncateid(id):
-    return id[:12]
+def showtag(data):
+    return data[0].split(':')[1]
 
-register.filter(truncateid)
-
+register.filter(showtag)
 
 @register.simple_tag
 def stampconvert(timestamp):
