@@ -45,6 +45,20 @@ class ContainerView(TemplateView):
         context = super(ContainerView, self).get_context_data(**kwargs)
         context['container_id'] = container_id
         context['container_inspect'] = cli.inspect_container(container_id)
+        context['container_diff'] = cli.diff(container_id)
+        context['container_logs'] = cli.logs(container_id)
+        return context
+
+
+class ContainerAttachView(TemplateView):
+    template_name = 'attach.html'
+
+    def get_context_data(self, **kwargs):
+        host = Host.objects.get(id=kwargs['host_id'])
+        container_id = kwargs['container_id']
+        context = super(ContainerAttachView, self).get_context_data(**kwargs)
+        context['container_id'] = container_id
+        context['host_model'] = host
         return context
 
 

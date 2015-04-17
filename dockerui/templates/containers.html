@@ -34,7 +34,7 @@
                         {% for host in hosts_list %}
                             {% for container in host.containers %}
                                 <tr>
-                                    <td><a href="{% url 'host' host.id %}">{{ host.description }}</a></td>
+                                    <td><a href="{% url 'images' host.id %}">{{ host.description }}</a></td>
                                     <td><a href="{% url 'container' host.id container.Id|slice:":12" %}">{{ container.Id|slice:":12" }}</a></td>
                                     <td>{{ container.Image }}</td>
                                     <td>{{ container.Command }}</td>

@@ -1,13 +1,14 @@
+{% load static %}
 <!doctype html>
 <html>
     <head>
-        <link rel="stylesheet" href="xterm.css" />
-        <script src="xterm.js"></script>
+        <link rel="stylesheet" href="{% static "css/xterm.css" %}" />
+        <script src="{% static "js/xterm.js" %}"></script>
     </head>
     <body>
         <script>
             var term = new Terminal(),
-                url = 'ws://192.168.10.21:2376/containers/91f0399cf6ef/attach/ws?logs=0&stream=1&stdin=1&stdout=1',
+                url = 'ws://{{ host_model.hostname }}/containers/{{ container_id }}/attach/ws?logs=0&stream=1&stdin=1&stdout=1',
                 socket = new WebSocket(url);
 
             term.open(document.body);
